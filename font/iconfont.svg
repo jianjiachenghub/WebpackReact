@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="gongwenbao" unicode="&#58887;" d="M916-63.3H110c-6.6 0-12 5.4-12 12V447.8h830v-499.1c0-6.6-5.4-12-12-12zM110 639.9h806c6.6 0 12-5.4 12-12v-180.1H98V627.9c0 6.6 5.4 12 12 12zM353.1 448m-52.4 0a52.4 52.4 0 1 1 104.8 0 52.4 52.4 0 1 1-104.8 0ZM673.1 447.8m-52.4 0a52.4 52.4 0 1 1 104.8 0 52.4 52.4 0 1 1-104.8 0ZM684.5 521H340.6c-14.9 0-27 12.1-27 27V741.3c0 14.9 12.1 27 27 27h343.9c14.9 0 27-12.1 27-27V548c0-14.9-12.1-27-27-27z m-340.9 30h337.9V738.3H343.6V551z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

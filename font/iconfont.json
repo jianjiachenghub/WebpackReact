@@ -1,0 +1,16 @@
+{
+  "id": "1590538",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "12582544",
+      "name": "公文包",
+      "font_class": "gongwenbao",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}

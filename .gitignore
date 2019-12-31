@@ -1,0 +1,14 @@
+
+**/node_modules
+
+/build
+
+.idea
+
+.history
+
+.vscode
+
+/dist
+
+
