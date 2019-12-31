@@ -11,9 +11,9 @@
             "safari": 11.1
           },
           // 根据代码逻辑中用到的 ES6+语法进行方法的导入，而不是全部导入
-          "useBuiltIns": "usage"
+          "useBuiltIns": "usage" //useBuiltIns就是是否开启自动支持 polyfill，它能自动给每个文件添加其需要的poly-fill。
         }
       ],
       "@babel/preset-react"
-    ]
+    ],
   }

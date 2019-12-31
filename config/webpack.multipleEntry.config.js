@@ -1,7 +1,7 @@
 /*
  * @Author: 简佳成
  * @Date: 2019-12-31 14:56:14
- * @LastEditTime : 2019-12-31 14:58:10
+ * @LastEditTime : 2019-12-31 16:06:41
  * @LastEditors  : Please set LastEditors
  * @Description: 网上找的Webpack多入口配置，可以发现是在生成HTML的时候压入不同的包即可
  * @SourcePath: https://github.com/Yi-love/webpack4-demo/tree/step_2
