@@ -82,11 +82,6 @@ module.exports = merge(common, {
       maxSize: 0,
       minChunks: 1,
       cacheGroups: {// 定义了需要被抽离的模块
-        framework: {
-          test: "framework",// 字符串|正则表达式|函数 从其他模块中把包含这个模块的抽离出来
-          name: "framework",// 抽离后生成的名字
-          enforce: true
-        },
         vendors: {// 缓存组
           priority: -10,
           test: /node_modules/,// 选从node_modules文件夹下引入的模块，所以所有第三方模块才会被拆分出来

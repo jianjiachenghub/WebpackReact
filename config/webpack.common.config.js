@@ -4,7 +4,7 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {// 定义入口文件
     index: './src/index.js',
-    framework: ['react','react-dom'],// 代码分割 不修改的部分提出来单独打包
+    //framework: ['react','react-dom'],// 代码分割 定义分组
   },
   output: {// 编译打包之后的文件名以及所在路径
     filename: 'js/bundle.js',

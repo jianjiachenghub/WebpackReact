@@ -6,6 +6,8 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');// 只想要最新�
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');// 压缩代码
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');// 将css提出去，而不是直接在页面来内嵌
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');// 将提出去的css压缩
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // 包大小分析工具
+
 
 
 
@@ -61,6 +63,9 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[id].[hash].css',
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerPort: 9001,
     })
   ],
   optimization: {// 优化
@@ -82,19 +87,14 @@ module.exports = merge(common, {
       })
     ],
     splitChunks: {// 抽离公共代码
-      chunks: 'all',
+      chunks: 'all',// 效值是all、async和initial。提供all可能特别强大，因为这意味着即使在异步和非异步块之间也可以共享块
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
-      cacheGroups: {// 定义了需要被抽离的模块
-        framework: {
-          test: "framework",// 字符串|正则表达式|函数 从其他模块中把包含这个模块的抽离出来
-          name: "framework",// 抽离后生成的名字
-          enforce: true
-        },
-        vendors: {// 缓存组
-          priority: -10,
-          test: /node_modules/,// 选从node_modules文件夹下引入的模块，所以所有第三方模块才会被拆分出来
+      cacheGroups: {// 定义了被抽离的模块如何分成组，不然公共代码全打包到一个JS文件里面
+        vendors: {// 第三方库抽离
+          priority: 1,// 权重 先进行第三方库抽离
+          test:  /[\\/]node_modules[\\/]/,// 选从node_modules文件夹下引入的模块，所以所有第三方模块才会被拆分出来 递归的
           name: "vendor",
           enforce: true,
         },
