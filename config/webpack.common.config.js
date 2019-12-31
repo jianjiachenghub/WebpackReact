@@ -11,25 +11,31 @@ module.exports = {
     path: path.resolve(__dirname, '../dist')
   },
   module: {// 编译器
+    //noPars:/jquery/,// 比如我引入了jquery 它不依赖其他的包，就不需要解析 直接打包
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx)$/,// 代码
         use: 'babel-loader',
         exclude: /node_modules/,// 不需要去转译
       },
       {
-        test: /\.(jpg|png|gif)$/,
+        test: /\.(jpg|png|gif)$/,//图片
         use: {
           loader: 'url-loader',
           options: {
             name: '[name].[ext]',
             outputPath: 'images/',
-            limit: 8192,// 大于8Kb走file-loader，小的ICON什么的直接打包插入到bundle.js中减少Http请求
+            limit: 8192,// 大于8Kb走file-loader（好像是自动的不用添加fallback），小的ICON什么的直接打包插入到bundle.js中减少Http请求
+/*             fallback: {
+              loader: 'file-loader',
+              options: {
+                  name: 'img/[name].[hash:8].[ext]'
+              } */
           },
         }
       },
       {
-        test: /\.(eot|ttf|svg|woff|woff2)$/,
+        test: /\.(eot|ttf|svg|woff|woff2)$/,// 字体
         use: {
           loader: 'file-loader',
           options: {
@@ -37,7 +43,18 @@ module.exports = {
             outputPath: 'font/'
           }
         }
-      }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/, //媒体文件
+        use:  {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[hash:8].[ext]',
+              outputPath:'media/'
+            }
+          }
+        
+      },
 /*       {
         test: /\.css$/,
         use: [ 

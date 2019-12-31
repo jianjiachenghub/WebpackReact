@@ -1,6 +1,9 @@
 import React from "react";
 import "./app.less";
 import background from "../image/vscode.png";
+import vis from "../image/可视化.png";
+import video from "../video/110.mp4";
+
 console.log(background);
 
 function App() {
@@ -9,6 +12,10 @@ function App() {
     <div className="app">
       <h1 className="text">Hello Webpack<i className="iconfont">&#xe69b;</i></h1>
       <img className="background" src={background} alt=""/>
+      <img src={vis} alt=""/>
+      <video src={video} controls="controls">
+您的浏览器不支持 video 标签。
+</video>
     </div>
   );
 }
