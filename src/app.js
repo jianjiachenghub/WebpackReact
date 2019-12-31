@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import React from "react";
 import "./app.less";
 import background from "../image/vscode.png";
@@ -5,6 +6,19 @@ import vis from "../image/可视化.png";
 import video from "../video/110.mp4";
 
 console.log(background);
+const sun = (x,y)=>x+y
+new Promise()
+Array.form([1,2])
+@testable
+class A {
+
+}
+
+function testable(target) {
+  target.isTestable = true;
+}
+
+MyTestableClass.isTestable // true
 
 function App() {
   console.log(123)
