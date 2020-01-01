@@ -1,4 +1,3 @@
-import "babel-polyfill";
 import React from "react";
 import "./app.less";
 import background from "../image/vscode.png";
