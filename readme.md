@@ -32,6 +32,7 @@ cnpm run build
 
 
 ## 初始化package.json
+
 创建一个WebpackReact项目，使用`cnpm init -y`指令
 -y： 避免一直确认输入yes
 
