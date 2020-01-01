@@ -2,12 +2,15 @@
 > 
 ## 项目的地址
 
-https://github.com/jianjiachenghub/WebpackReact.git
-内部配置大部分做了详细说明
-执行方式：
-cnpm install
-cnpm run start
-cnpm run build
+https://github.com/jianjiachenghub/WebpackReact.git 
+
+内部配置大部分做了详细说明 
+
+执行方式： 
+
+- 下载依赖：cnpm install
+- 本地运行：cnpm run start
+- 打包：cnpm run build
 
 ## 完成的功能
 
@@ -74,6 +77,7 @@ WebpackReact
 ```
 
 ## 修改package.json指令
+
 ```
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -196,7 +200,9 @@ root.innerHTML = 'hello, webpack!';
 运行代码`npm run build`就可以看到dist文件下打包的js
 
 ## 测试打包结果
+
 我们创建一个`public`来测试打包运行的结果，后面会用插件来干这件事
+
 ```
 WebpackReact
 ├── config
@@ -211,7 +217,9 @@ WebpackReact
 ├── src
 │   ├── app.js
 ```
+
 在`public`里创建一个html并引入打包好的JS文件
+
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -228,7 +236,9 @@ WebpackReact
 </html>
 
 ```
+
 直接在浏览器里运行这个文件
+
 ![](http://photo.jianjiacheng.com/blog/WebpackReact/1.png)
 
 
@@ -300,11 +310,14 @@ export default App;
 
 ```
 
-直接重新运行`npm run build` ，会发现打包失败，原因是webpack无法识别你的react语法啊，需要预先编译
+直接重新运行`npm run build` ，会发现打包失败，原因是webpack无法识别你的react语法啊，需要预先编译 
+
 ![](http://photo.jianjiacheng.com/blog/WebpackReact/2.png)
 
-## 配置bable
-安装相关的bable依赖
+## 配置bable 
+
+安装相关的bable依赖 
+
 ```
 npm install --save-dev babel-loader @babel/preset-react @babel/preset-env @babel/core
 
