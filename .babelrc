@@ -16,5 +16,7 @@
       ],
       "@babel/preset-react"
     ],
-    "plugins": [["@babel/plugin-proposal-decorators", { "legacy": true }]]// 动态加载这样全局引入会使得打包变得很低
+    "plugins": [
+      ["@babel/plugin-proposal-decorators", { "legacy": true }]
+    ]
   }

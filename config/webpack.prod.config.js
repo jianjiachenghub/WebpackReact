@@ -21,7 +21,7 @@ module.exports = merge(common, {
       {
         test: /\.css$/,
         use: [ 
-          MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,// 单独提出CSS
           'css-loader',
           'postcss-loader'// 对css编译的工具 可以：1.使用下一代css语法 2 . 自动补全浏览器前缀 3 . 自动把px代为转换成rem 
         ]
@@ -49,9 +49,7 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      // 这里有小伙伴可能会疑惑为什么不是 '../public/index.html'
-      // 我的理解是无论与要用的template是不是在一个目录，都是从根路径开始查找
-      template: 'public/index.html',// 定义的html为模板生成
+      template: 'public/index.html',// 定义的html为模板生成 从根路径开始查找
       inject: 'body',
       minify: {// 压缩HTML文件
         removeComments: true,//去除注释
@@ -86,7 +84,7 @@ module.exports = merge(common, {
         canPrint:true
       })
     ],
-    splitChunks: {// 抽离公共代码
+    splitChunks: {// 抽离公共代码 具体配置看官网
       chunks: 'all',// 效值是all、async和initial。提供all可能特别强大，因为这意味着即使在异步和非异步块之间也可以共享块
       minSize: 30000,
       maxSize: 0,
