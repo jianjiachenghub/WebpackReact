@@ -14,10 +14,13 @@
           "useBuiltIns": "usage" //useBuiltIns就是是否开启自动支持 polyfill，它能自动给每个文件添加其需要的poly-fill。
         }
       ],
-      "@babel/preset-react"
+      "@babel/preset-react"// 内部应该包含jsx解析器等多个插件
     ],
     "plugins": [
       ["@babel/plugin-proposal-decorators", { "legacy": true }],
       ["syntax-dynamic-import"]
+      //["@babel/plugin-transform-runtime"]
     ]
   }
+
+// 注意babelrc解析是：从下往上，从右向左的顺序

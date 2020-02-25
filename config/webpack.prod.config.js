@@ -64,9 +64,13 @@ module.exports = merge(common, {
     }),
     new BundleAnalyzerPlugin({
       analyzerPort: 9001,
-    })
+    }),
+/*     new ProvidePlugin({//暴露全局变量
+      '$':'jquery'
+    }) */
   ],
   optimization: {// 优化
+    //usedExports: true,//?开启Tree shaking  要添加sideEffects排除部分css
     minimizer: [ // 最小化器
       new TerserPlugin({// 缩减代码的插件
         terserOptions: {
@@ -96,18 +100,18 @@ module.exports = merge(common, {
           chunks: 'initial',
           priority: 2
         },
-        vendors: {// 第三方库抽离
+        vendors: {// 第三方库抽离,为 Vendor 单独打包（Vendor 指第三方的库或者公共的基础组件，因为 Vendor 的变化比较少，单独打包利于缓存）
           priority: 1,// 权重 先进行第三方库抽离
           test:  /[\\/]node_modules[\\/]/,// 选从node_modules文件夹下引入的模块，所以所有第三方模块才会被拆分出来 递归的
           name: "vendor",
           chunks: 'initial',
           enforce: true,
         },
-        default: {
+        default: {// 抽离公共模块
           name: 'common',
           chunks: 'initial',
           minChunks: 2,  //模块被引用2次以上的才抽离
-          priority: -1 
+          priority: -1  // 最后抽离公共代码
       },
       }
     }

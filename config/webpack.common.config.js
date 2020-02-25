@@ -6,7 +6,7 @@ module.exports = {
     // 定义入口文件
     index: "./src/index.js"
     //index: ['babel-polyfill','./src/index.js'], // 添加polyfill垫片（挂载ES6+的方法和API如Promise等）这是很老的写法被坑了，会污染全局，现在preset-env内置了按需加载
-    //framework: ['react','react-dom'],// 代码分割 定义分组
+    //framework: ['react','react-dom'],// 代码分割 定义分组 后面splitChunks.cacheGroups(无test属性)里name:[framework]就可以把'react'打入framework的包里
   },
   output: {
     // 编译打包之后的文件名以及所在路径
@@ -21,6 +21,7 @@ module.exports = {
         test: /\.(js|jsx)$/, // 代码
         use: "babel-loader",
         exclude: /node_modules/ // 不需要去转译
+        // ["import",{libraryName: "antd", style: 'css'}],   //antd按需加载  配置到options的plugins里
       },
       {
         test: /\.(jpg|png|gif)$/, //图片

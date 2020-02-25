@@ -17,7 +17,7 @@ function testable(target) {
   target.isTestable = true;
 }
 
-MyTestableClass.isTestable // true
+MyTestableClass.isTestable // true 测试修饰器
 
 function App() {
   console.log(123)

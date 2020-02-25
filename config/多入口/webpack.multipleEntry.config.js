@@ -1,10 +1,15 @@
 /*
- * @Author: 简佳成
+ * @Author: Yi-love
+ * @SourcePath: https://github.com/Yi-love/webpack4-demo/tree/step_2
  * @Date: 2019-12-31 14:56:14
  * @LastEditTime : 2019-12-31 16:06:41
  * @LastEditors  : Please set LastEditors
- * @Description: 网上找的Webpack多入口配置，可以发现是在生成HTML的时候压入不同的包即可
- * @SourcePath: https://github.com/Yi-love/webpack4-demo/tree/step_2
+ * @Description: 
+ * 网上找的Webpack多入口配置
+ * entry时定义两个入口
+ * 可以发现是在生成HTML的时候压入不同的包即可
+ * 可能会有不同入口引入相同的包而出现重复打入的现象（a和b都用了c，那么c会被同时打进a和b的包）
+ * 为了避免这个问题我们可以提出引用次数超出两次的模块
  */
 
 
@@ -20,6 +25,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: 'development', //编译模式
+    // 1.写成数组的方式就可以打出多入口文件，不过这里打包后的文件都合成了一个
+    // entry: ['./src/index.js', './src/login.js'],
+     // 2.真正实现多入口和多出口需要写成对象的方式
     entry:{//入口文件
         pagea:'./client/pagea/index.js', 
         pageb:['babel-polyfill' , './client/pageb/index.js']

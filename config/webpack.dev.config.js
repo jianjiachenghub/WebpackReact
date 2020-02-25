@@ -54,7 +54,7 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      // 这里有小伙伴可能会疑惑为什么不是 '../public/index.html'
+      // 可能会疑惑为什么不是 '../public/index.html'
       // 我的理解是无论与要用的template是不是在一个目录，都是从根路径开始查找
       template: 'public/index.html',// 定义的html为模板生成
       inject: 'body',

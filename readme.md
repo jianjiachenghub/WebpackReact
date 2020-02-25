@@ -32,6 +32,25 @@ https://github.com/jianjiachenghub/WebpackReact.git
 - [x] 加入了webpack多入口的配置
 - [x] 加入了对包大小的可视化分析工具
 
+## 还想实现的功能
+
+- babel缓存
+我们每次执行构建都会把所有的文件都重复编译一遍，这样的重复工作是否可以被缓存下来呢，答案是可以的，目前大部分 loader 都提供了cache 配置项。比如在 babel-loader 中，可以通过设置cacheDirectory 来开启缓存，babel-loader?cacheDirectory=true 就会将每次的编译结果写进硬盘文件（默认是在项目根目录下的node_modules/.cache/babel-loader目录内，当然你也可以自定义）
+
+
+- 使用动态链接库文件DLL
+如果不使用使用 DLLPlugin 插件，当引入第三方模块时，每一次打包都要进行分析，是消耗打包的性能的。使用 DLLPlugin 提高打包速度,在第一次打包时，把第三方模块单独打包生成一个文件 vendors.dll.js ，之后在打包时就可以直接从 vendors.dll.js 中引入之前打包好的第三方模块，速度就会变快。
+要想实现，就得做一些配置：
+先配置 webpack.dll.js 文件，在 package.json中添加一个脚本，在配置 webpack.common.js 文件
+
+- Tree Shaking:只支持 ES Module 例如 import 和 export 的静态结构特性的引入。当引入一个模块时，不引入所有的代码，只引入需要的代码
+- happypack并发执行任务(代码中加入未开启)
+
+- CDN(已添加方法到笔记)
+- react-loadable 动态加载
+- react-lazyload 懒加载
+- react-placeholder 骨架
+- babel-plugin-import(已加入未开启)
 
 
 ## 初始化package.json
