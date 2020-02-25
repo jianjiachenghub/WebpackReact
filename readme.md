@@ -47,8 +47,8 @@ https://github.com/jianjiachenghub/WebpackReact.git
 - happypack并发执行任务(代码中加入未开启)
 
 - CDN(已添加方法到笔记)
-- react-loadable 动态加载
-- react-lazyload 懒加载
+- react-loadable 动态加载(结合插件)
+- react-lazyload 懒加载(使用React.lazy的API)
 - react-placeholder 骨架
 - babel-plugin-import(已加入未开启)
 
