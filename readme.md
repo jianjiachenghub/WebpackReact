@@ -20,6 +20,8 @@ https://github.com/jianjiachenghub/WebpackReact.git
 - [x] 代码分割 定义了被抽离的模块如何分成组
 - [x] 识别React语法以及ES6
 - [x] 处理了不兼容ES7修饰器（@）Decorator的问题
+- [x] 小于8k的图片以base64压入url减少请求
+- [x] 添加了组件按需加载而不是直接导入整个模块
 - [x] 加入了less以及sass的处理
 - [x] 抽离了所有的css样式文件
 - [x] 压缩了JS代码以及CSS代码
@@ -47,10 +49,8 @@ https://github.com/jianjiachenghub/WebpackReact.git
 - happypack并发执行任务(代码中加入未开启)
 
 - CDN(已添加方法到笔记)
-- react-loadable 动态加载(结合插件)
-- react-lazyload 懒加载(使用React.lazy的API)
-- react-placeholder 骨架
-- babel-plugin-import(已加入未开启)
+- 按需加载babel-plugin-import(已加入未开启)
+- 首屏渲染loading(方法已添加到笔记)
 
 
 ## 初始化package.json

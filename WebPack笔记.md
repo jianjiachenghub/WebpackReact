@@ -1,3 +1,37 @@
+## tapable 钩子
+>参考https://juejin.im/post/5aa3d2056fb9a028c36868aa
+
+webpack本质上是一种事件流的机制，它的工作流程就是将各个插件串联起来，而实现这一切的核心就是Tapable，webpack中最核心的负责编译的Compiler和负责创建bundles的Compilation都是Tapable的实例。
+
+（1）多个事件连续顺序执行
+（2）并行执行
+（3）异步执行
+（4）一个接一个地执行插件，前面的输出是后一个插件的输入的瀑布流执行顺序
+（5）在允许时停止执行插件，即某个插件返回了一个undefined的值，即退出执行
+我们可以看到，Tapable就像nodejs中EventEmitter,提供对事件的注册on和触发emit,理解它很重要
+
+
+## Compiler 和 Compilation
+>https://segmentfault.com/a/1190000015088834?utm_source=tag-newest
+
+在开发 Plugin 时最常用的两个对象就是 Compiler 和 Compilation，它们是 Plugin 和 Webpack 之间的桥梁。 Compiler 和 Compilation 的含义如下：
+
+Compiler 对象包含了 Webpack 环境所有的的配置信息，包含 options，loaders，plugins 这些信息，这个对象在 Webpack 启动时候被实例化，它是全局唯一的，可以简单地把它理解为 Webpack 实例；
+Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。当 Webpack 以开发模式运行时，每当检测到一个文件变化，一次新的 Compilation 将被创建。Compilation 对象也提供了很多事件回调供插件做扩展。通过 Compilation 也能读取到 Compiler 对象。
+Compiler 和 Compilation 的区别在于：Compiler 代表了整个 Webpack 从启动到关闭的生命周期，而 Compilation 只是代表了一次新的编译。
+
+webpack 的入口文件其实就实例了Compiler并调用了run方法开启了编译，webpack的编译都按照下面的钩子调用顺序执行。
+
+before-run 清除缓存
+run 注册缓存数据钩子
+before-compile
+compile 开始编译
+make 从入口分析依赖以及间接依赖模块，创建模块对象
+build-module 模块构建
+seal 构建结果封装， 不可再更改
+after-compile 完成构建，缓存数据
+emit 输出到dist目录
+
 
 
 ## alias对文件路径优化
@@ -162,39 +196,52 @@ externals: {
 </html>
 ```
 
-## tapable 钩子
->参考https://juejin.im/post/5aa3d2056fb9a028c36868aa
+## 首屏渲染loading
+使用 html-webpack-plugin 来帮助我们自动插入 loading
+```
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
 
-webpack本质上是一种事件流的机制，它的工作流程就是将各个插件串联起来，而实现这一切的核心就是Tapable，webpack中最核心的负责编译的Compiler和负责创建bundles的Compilation都是Tapable的实例。
+// 读取写好的 loading 态的 html 和 css
+var loading = {
+    html: fs.readFileSync(path.join(__dirname, './loading.html')),
+    css: '<style>' + fs.readFileSync(path.join(__dirname, './loading.css')) + '</style>'
+}
 
-（1）多个事件连续顺序执行
-（2）并行执行
-（3）异步执行
-（4）一个接一个地执行插件，前面的输出是后一个插件的输入的瀑布流执行顺序
-（5）在允许时停止执行插件，即某个插件返回了一个undefined的值，即退出执行
-我们可以看到，Tapable就像nodejs中EventEmitter,提供对事件的注册on和触发emit,理解它很重要
+var webpackConfig = {
+  entry: 'index.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'index_bundle.js'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'xxxx.html',
+      template: 'template.html',
+      loading: loading
+    })
+  ]
+};
 
+```
 
-## Compiler 和 Compilation
->https://segmentfault.com/a/1190000015088834?utm_source=tag-newest
+模板中：
+```
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%= htmlWebpackPlugin.options.loading.css %>
+    </head>
 
-在开发 Plugin 时最常用的两个对象就是 Compiler 和 Compilation，它们是 Plugin 和 Webpack 之间的桥梁。 Compiler 和 Compilation 的含义如下：
+    <body>
+        <div id="root">
+            <%= htmlWebpackPlugin.options.loading.html %>
+        </div>
+    </body>
+</html>
 
-Compiler 对象包含了 Webpack 环境所有的的配置信息，包含 options，loaders，plugins 这些信息，这个对象在 Webpack 启动时候被实例化，它是全局唯一的，可以简单地把它理解为 Webpack 实例；
-Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。当 Webpack 以开发模式运行时，每当检测到一个文件变化，一次新的 Compilation 将被创建。Compilation 对象也提供了很多事件回调供插件做扩展。通过 Compilation 也能读取到 Compiler 对象。
-Compiler 和 Compilation 的区别在于：Compiler 代表了整个 Webpack 从启动到关闭的生命周期，而 Compilation 只是代表了一次新的编译。
+```
 
-webpack 的入口文件其实就实例了Compiler并调用了run方法开启了编译，webpack的编译都按照下面的钩子调用顺序执行。
-
-before-run 清除缓存
-run 注册缓存数据钩子
-before-compile
-compile 开始编译
-make 从入口分析依赖以及间接依赖模块，创建模块对象
-build-module 模块构建
-seal 构建结果封装， 不可再更改
-after-compile 完成构建，缓存数据
-emit 输出到dist目录
 
 
 
