@@ -32,7 +32,49 @@ seal 构建结果封装， 不可再更改
 after-compile 完成构建，缓存数据
 emit 输出到dist目录
 
+## Webpack构建流程
 
+- 初始化参数：从配置文件和 Shell 语句中读取与合并参数,得出最终的参数。
+- 开始编译：用上一步得到的参数初始化 Compiler 对象,加载所有配置的插件,执行对象的 run 方法开始执行编译。
+- 确定入口：根据配置中的 entry 找出所有的入口文件。
+- 编译模块：从入口文件出发,调用所有配置的 Loader 对模块进行翻译,再找出该模块依赖的模块,再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理。
+- 完成模块编译：在经过第 4 步使用 Loader 翻译完所有模块后,得到了每个模块被翻译后的最终内容以及它们之间的依赖关系。
+- 输出资源：根据入口和模块之间的依赖关系,组装成一个个包含多个模块的 Chunk,再把每个 Chunk 转换成一个单独的文件加入到输出列表,这步是可以修改输出内容的最后机会。
+- 输出完成：在确定好输出内容后,根据配置确定输出的路径和文件名,把文件内容写入到文件系统。
+
+简单总结：
+- 读取文件分析模块依赖
+- 对模块进行解析执行(深度遍历)
+- 针对不同的模块使用相应的loader
+- 编译模块，生成抽象语法树AST。
+- 循环遍历AST树，拼接输出js。
+
+## Webpack 热更新(HMR)原理
+
+>https://juejin.im/post/5de0cfe46fb9a071665d3df0
+>https://juejin.im/post/5d8b755fe51d45781332e919
+>https://www.mybj123.com/4764.html
+
+主要依赖webpack, express, websocket
+
+- 使用express启动本地服务，这个服务端可以监听本地文件的变化，当浏览器访问的时候做出响应
+- 服务端和客户端使用websocket实现长连接建立通信
+- webpack监听源文件的变化
+  - 每次编译完成之后会生成hash值，已改动模块的json文件，已改动模块代码的js文件
+  - 编译完成后本地服务端通过socket向客户端推送当前编译的hash值
+- 客户端的websocket监听到有文件改动推送过来的hash值，会和上一次进行对比
+  - 一致就走缓存
+  - 不一致则通过ajax和jsonp获取最新的资源
+- 使用内存文件系统去替换有修改的内容实现局部更新
+
+<img src='./img/Webpack热更新流程.png'>
+
+
+## module和plugins有什么区别
+
+module里面是放的loader ，用于对模块源码的转换，loader描述了webpack如何处理非javascript模块，并且在buld中引入这些依赖。loader可以将文件从不同的语言（如TypeScript）转换为JavaScript，或者将内联图像转换为data URL。比如说：CSS-Loader，Style-Loader等。
+
+plugin 用于扩展webpack的功能。它直接作用于 webpack，扩展了它的功能。目的在于解决loader无法实现的其他事，从打包优化和压缩，到重新定义环境变量，功能强大到可以用来处理各种各样的任务。
 
 ## alias对文件路径优化
 
@@ -79,7 +121,7 @@ presets的"@babel/preset-env"里可以设置useBuiltIns来动态载入polyfill�
 
 ### 错误实例
 
-下面写法看似逻辑是对的，其实在报错，因为编译器的执行不是css-loader-》style-loader-》
+下面写法看似逻辑是对的，其实在报错，因为编译器的执行不是css-loader->style-loader->
 ```
 module: {
     rules: [
@@ -241,6 +283,18 @@ var webpackConfig = {
 </html>
 
 ```
+
+### Webpack 缺陷
+
+webpack用上去并不是那么顺心
+- 这个插件干了什么？
+- 我的配置有错误吗？
+- 这个插件真的没有bug吗？
+- 这文档怎么这样？
+- 这配置也太复杂了吧？
+- 需要集成babel！
+- 用一次感觉跟做了一场外科手术似的！
+- 对server-render不友好！
 
 
 
