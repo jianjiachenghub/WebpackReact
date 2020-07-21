@@ -45,11 +45,11 @@ https://github.com/jianjiachenghub/WebpackReact.git
 要想实现，就得做一些配置：
 先配置 webpack.dll.js 文件，在 package.json中添加一个脚本，在配置 webpack.common.js 文件
 
-- Tree Shaking:只支持 ES Module 例如 import 和 export 的静态结构特性的引入。当引入一个模块时，不引入所有的代码，只引入需要的代码
+- Tree Shaking按需加载:只支持 ES Module 例如 import 和 export 的静态结构特性的引入。当引入一个模块时，不引入所有的代码，只引入需要的代码。
 - happypack并发执行任务(代码中加入未开启)
 
 - CDN(已添加方法到笔记)
-- 按需加载babel-plugin-import(已加入未开启)
+- 组件库按需加载babel-plugin-import(已加入未开启)
 - 首屏渲染loading(方法已添加到笔记)
 
 
@@ -342,10 +342,10 @@ npm install --save-dev babel-loader @babel/preset-react @babel/preset-env @babel
 
 ```
 
-*   **babel-loader：**使用Babel和webpack来转译JavaScript文件。
-*   **@babel/preset-react：**转译react的JSX
-*   **@babel/preset-env：**转译ES2015+的语法
-*   **@babel/core：**babel的核心模块
+*   **babel-loader** 使用Babel和webpack来转译JavaScript文件。
+*   **@babel/preset-react** 转译react的JSX
+*   **@babel/preset-env** 转译ES2015+的语法
+*   **@babel/core** babel的核心模块
 
 根目录新建一个配置文件`.babelrc` 配置相关的"presets"
 
@@ -391,7 +391,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
-        exclude: /node_modules/,//不需要去转译"node\_modules"这里面的文件。
+        exclude: /node_modules/,//不需要去转译"node\_modules"这里面的文件。模块发布到npm时都要提供源码以及编译后的commonjs规范的代码
       }
     ]
   }
@@ -518,7 +518,7 @@ WebpackReact
 ## 需要用到的Webpack内置的配置
 
 ### 给打包出的js文件换个不确定名字
-使用webpack内置的\[hash\]或\[chunkhash\]
+使用webpack内置的[hash]或[chunkhash]
 ```
 const merge = require('webpack-merge');
 const common = require('./webpack.common.config.js');

@@ -1,6 +1,6 @@
 ## Babel 的工作流程
 
-上面那幅图已经描述了 Babel 的工作流程，下面我们再详细描述一下。Babel 的三个主要处理步骤分别是： 解析（parse），转换（transform），生成（generate）。
+Babel 的三个主要处理步骤分别是： 解析（parse），转换（transform），生成（generate）。
 
 ### 解析
 
@@ -35,6 +35,7 @@
 和 babel-cli 一样，babel-loader 也会读取 .babelrc 或者 package.json 中的 babel 段作为自己的配置，之后的内核处理也是相同。唯一比 babel-cli 复杂的是，它需要和 webpack 交互，因此需要在 webpack 这边进行配置。
 
 ### babel-register
+>分析了四种引入方式：https://www.cnblogs.com/Jeely/p/11231530.html
 
 babel-register 模块改写 require 命令，为它加上一个钩子。此后，每当使用 require 加载 .js、.jsx、.es 和 .es6 后缀名的文件，就会先用 babel 进行转码。
 
