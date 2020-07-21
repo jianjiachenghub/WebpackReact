@@ -5,19 +5,12 @@ import vis from "../image/可视化.png";
 import video from "../video/110.mp4";
 
 console.log(background);
-const sun = (x,y)=>x+y
-new Promise()
-Array.form([1,2])
-@testable
+const sun = (x,y)=>x+y;
 class A {
-
+    constructor(){
+      this.name = 1
+    }
 }
-
-function testable(target) {
-  target.isTestable = true;
-}
-
-MyTestableClass.isTestable // true 测试修饰器
 
 function App() {
   console.log(123)

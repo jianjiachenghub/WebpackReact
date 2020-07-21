@@ -1,3 +1,13 @@
+## Webpack 打包原理
+>it internally builds a dependency graph which maps every module your project needs and generates one or more bundles（webpack会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle）
+
+- 我们需要读到入口文件里的内容（也就是index.js的内容）
+- 利用babel完成代码转换及解析,并生成单个文件的依赖模块Map
+- 分析入口文件，递归的去读取模块所依赖的文件内容，生成依赖图
+- 将各个引用模块打包为一个立即执行函数
+- 根据依赖图，生成浏览器能够运行的最终代码
+- 将最终的bundle文件写入bundle.js中
+
 ## tapable 钩子
 >参考https://juejin.im/post/5aa3d2056fb9a028c36868aa
 
@@ -49,27 +59,6 @@ emit 输出到dist目录
 - 编译模块，生成抽象语法树AST。
 - 循环遍历AST树，拼接输出js。
 
-## Webpack 热更新(HMR)原理
-
->https://juejin.im/post/5de0cfe46fb9a071665d3df0
->https://juejin.im/post/5d8b755fe51d45781332e919
->https://www.mybj123.com/4764.html
-
-主要依赖webpack, express, websocket
-
-- 使用express启动本地服务，这个服务端可以监听本地文件的变化，当浏览器访问的时候做出响应
-- 服务端和客户端使用websocket实现长连接建立通信
-- webpack监听源文件的变化
-  - 每次编译完成之后会生成hash值，已改动模块的json文件，已改动模块代码的js文件
-  - 编译完成后本地服务端通过socket向客户端推送当前编译的hash值
-- 客户端的websocket监听到有文件改动推送过来的hash值，会和上一次进行对比
-  - 一致就走缓存
-  - 不一致则通过ajax和jsonp获取最新的资源
-- 使用内存文件系统去替换有修改的内容实现局部更新
-
-<img src='./img/Webpack热更新流程.png'>
-
-
 ## module和plugins有什么区别
 
 module里面是放的loader ，用于对模块源码的转换，loader描述了webpack如何处理非javascript模块，并且在buld中引入这些依赖。loader可以将文件从不同的语言（如TypeScript）转换为JavaScript，或者将内联图像转换为data URL。比如说：CSS-Loader，Style-Loader等。
@@ -114,7 +103,7 @@ Babel默认只转换新的JavaScript句法（syntax），而不转换新的API�
 
 polyfill指的是“用于实现浏览器不支持原生功能的代码”，比如，现代浏览器应该支持fetch函数，对于不支持的浏览器，网页中引入对应fetch的polyfill后，这个polyfill就给全局的window对象上增加一个fetch函数，让这个网页中的JavaScript可以直接使用fetch函数了，就好像浏览器本来就支持fetch一样。在这个链接上 https://github.com/github/fetch 可以找到fetch polyfill的一个实现。
 
-presets的"@babel/preset-env"里可以设置useBuiltIns来动态载入polyfill，不用全局引入babel-polyfill
+presets的"@babel/preset-env"里可以设置useBuiltIns来动态载入polyfill(需要事先在html里嵌入CDN)，不用在js里全局引入babel-polyfill
 
 
 ## css编译器顺序导致了Webpack编译报错
@@ -186,10 +175,22 @@ add1ThenDouble(2); // 6
 在代码中所有被import()的模块，都将打成一个单独的包，放在chunk存储的目录下。在浏览器运行到这一行代码时，就会自动请求这个资源，实现异步加载。
 webpack4已经支持了Es6的动态加载，无需再做配置
 
+## Tree-shaking的原理
+
+Tree-shaking的本质是消除无用的js代码（像摇树木的枯叶一样）。无用代码消除在广泛存在于传统的编程语言编译器中，编译器可以判断出某些代码根本不影响输出，然后消除这些代码，这个称之为DCE（dead code elimination）。
+
+Tree-shaking 和传统的 DCE的方法又不太一样，传统的DCE 消灭不可能执行的代码，而Tree-shaking 更关注宇消除没有用到的代码，消除那些引用了但并没有被使用的模块。
+
+Tree-shaking的原理是通过ES Module的方式进行静态分析，同时对程序流进行分析，判断变量是否被使用。ES6模块依赖关系是确定的，和运行时的状态无关，可以进行可靠的静态分析，这就是tree-shaking的基础。
+
+
+
 ## 什么是CDN
+
 CDN的全称是Content Delivery Network，即内容分发网络。
 其基本思路是尽可能避开互联网上有可能影响数据传输速度和稳定性的瓶颈和环节，使内容传输的更快、更稳定。通过在网络各处放置节点服务器所构成的在现有的互联网基础之上的一层智能虚拟网络，CDN系统能够实时地根据网络流量和各节点的连接、负载状况以及到用户的距离和响应时间等综合信息将用户的请求重新导向离用户最近的服务节点上。
 其目的是使用户可就近取得所需内容，解决Internet网络拥挤的状况，提高用户访问网站的响应速度。
+
 
 ## CDN关键技术
 
@@ -295,8 +296,3 @@ webpack用上去并不是那么顺心
 - 需要集成babel！
 - 用一次感觉跟做了一场外科手术似的！
 - 对server-render不友好！
-
-
-
-
-

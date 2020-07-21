@@ -93,6 +93,8 @@ module.exports = merge(common, {
       minSize: 30000,// 提出chunk的最小大小 30KB
       maxSize: 0,
       minChunks: 1,
+      // maxInitialRequests（默认 3）：一个代码块最终就会对应一个请求数，所以该属性决定入口最多分成的代码块数量，太小的值会使你无论怎么分割，都无法让入口的代码块变小。
+      // maxAnyscRequests 按需加载并发最大请求数,一个页面里同时按需加载过多模块时需要做限制时使用
       cacheGroups: {// 定义了被抽离的模块如何分成组，不然公共代码全打包到一个JS文件里面
         component: {  //拆分指定文件
           test: /(src\/component)/,
