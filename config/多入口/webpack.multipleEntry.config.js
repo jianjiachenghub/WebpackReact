@@ -103,8 +103,9 @@ module.exports = {
                 }
             }
         }),
+        //* 这里就是压入不同的包
         new HtmlWebpackPlugin({
-            filename: './../../server/views/pagea.html',
+            filename: './../../server/views/pagea.html', // 输出html文件的位置和名称
             chunks:['vue','tui-chart','pagea'],
             template: path.resolve(__dirname , './client/template.html')
         }),

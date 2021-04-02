@@ -652,6 +652,13 @@ npm install --save-dev mini-css-extract-plugin
 ```
 npm install --save-dev webpack-bundle-analyzer
 ```
+
+
+stat: 12.06M (打包之前输入的文件大小)
+
+parsed: 5.51M（打包之后输出的文件大小）
+
+gzipped: 1.68M（开启gzip压缩后的文件大小）
 ## 其他优化打包的插件使用方式
 直接在plugins字段里面new一个实例，参数就是插件的配置项
 我就不一一介绍了直接给一个完整的webpack.prod.config配置
