@@ -56,7 +56,7 @@ module.exports = merge(common, {
         collapseWhitespace: true,//去除空格
       },
     }),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(), 
     new UglifyJsPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
