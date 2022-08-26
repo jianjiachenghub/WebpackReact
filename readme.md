@@ -258,7 +258,7 @@ WebpackReact
 
 直接在浏览器里运行这个文件
 
-![](http://photo.jianjiacheng.com/blog/WebpackReact/1.png)
+![](./img/WebpackReact/1.png)
 
 
 
@@ -331,7 +331,7 @@ export default App;
 
 直接重新运行`npm run build` ，会发现打包失败，原因是webpack无法识别你的react语法啊，需要预先编译 
 
-![](http://photo.jianjiacheng.com/blog/WebpackReact/2.png)
+![](./img/WebpackReact/2.png)
 
 ## 配置bable 
 
@@ -472,13 +472,13 @@ npm install --save-dev style-loader css-loader
       } 
 ```
 可以看到CSS已经内嵌到了我们页面，我们可以优化一下让它单独提出来，下一章会详细说明
-![](http://photo.jianjiacheng.com/blog/WebpackReact/8.png)
+![](./img/WebpackReact/8.png)
 
 ## 注意 
 
 css编译器顺序可能会导致了Webpack编译报错 
 
-![](http://photo.jianjiacheng.com/blog/WebpackReact/loader加载顺序.png) 
+![](./img/WebpackReact/loader加载顺序.png) 
 
 Webpack选择了compose方式，而不是pipe的方式而已,从右往左的函数式，所以loader的顺序编程了从右往左 
 
